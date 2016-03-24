@@ -302,7 +302,7 @@ void showTime()
 
  void setTimeYear()
  {
-    transition(fecha.setTimeYear(&tmpYear));
+    transition(fecha.setTimeYear(&tmpYear, &lcd, TEXTO_TIME_YEAR, TEXTO_SET_YEAR,ANNO_MINIMO,ANNO_MAXIMO));
  }
 
 void setTimeMont()

@@ -32,23 +32,23 @@ void Dates::showTime(bool open, bool luxOpen, bool puntos, LCDKeypad* lcd2)
 
 }
 
-int Dates::setTimeYear(int* tmpYear)
+int Dates::setTimeYear(int* tmpDate, LCDKeypad* lcd2, char* texto, char* texto2, uint8_t minimo, uint8_t maximo)
 {
   
  unsigned long timeRef;
     bool _timeOut = true;
     _now = RTC.now();
-    *tmpYear = _now.year();
-    lcd.clear();
-    lcd.print("Time Year");
+    *tmpDate = _now.year();
+    lcd2->clear();
+    lcd2->print(texto);
 
     
 
     _timeRef = millis();
-    lcd.setCursor(0,1);
-    lcd.print("Set Year: ");
-    lcd.setCursor(11,1);
-    lcd.print(*tmpYear);
+    lcd2->setCursor(0,1);
+    lcd2->print(texto2);
+    lcd2->setCursor(11,1);
+    lcd2->print(*tmpDate);
     
     
     while ( (unsigned long)(millis() - _timeRef) < 5000 )
@@ -57,20 +57,20 @@ int Dates::setTimeYear(int* tmpYear)
 
         if ( button == KEYPAD_UP ) // Increase 1 hour
         {
-            *tmpYear = *tmpYear < 2022 ? *tmpYear + 1 : *tmpYear;
+            *tmpDate = *tmpDate < maximo ? *tmpDate + 1 : *tmpDate;
             lcd.setCursor(11,1);
             lcd.print("  ");
             lcd.setCursor(11,1);
-            lcd.print(*tmpYear);
+            lcd.print(*tmpDate);
             _timeRef = millis();
         }
         else if ( button == KEYPAD_DOWN ) //Decrease 1 hour
         {
-            *tmpYear = *tmpYear > 2014 ? *tmpYear - 1 :*tmpYear;
+            *tmpDate = *tmpDate > minimo ? *tmpDate - 1 :*tmpDate;
             lcd.setCursor(11,1);
             lcd.print("  ");
             lcd.setCursor(11,1);
-            lcd.print(*tmpYear);
+            lcd.print(*tmpDate);
             _timeRef = millis();
         }
         else if ( button == KEYPAD_SELECT ) //Save hour

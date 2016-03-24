@@ -27,7 +27,7 @@ private:
 public:
 	//Dates();
 	void showTime(bool, bool, bool,LCDKeypad*);
-	int setTimeYear(int*);
+	int setTimeYear(int*, LCDKeypad*, char*, char*, uint8_t, uint8_t);
 	int setTimeMont(uint8_t*);
 	int setTimeDay(uint8_t*);
 	int setTimeHours(uint8_t*);

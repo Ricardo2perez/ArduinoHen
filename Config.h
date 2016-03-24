@@ -33,8 +33,13 @@
 #define BAJAP2 40
 #define P2ARRIBA 42
 #define P2ABAJO 44
+#define ANNO_MINIMO 2014
+#define ANNO_MAXIMO 2022
 #define TEXTO_OPEN "Open Time"
 #define TEXTO_CLOSE "Close Time"
+#define TEXTO_TIME_YEAR "Time Year"
+#define TEXTO_SET_YEAR "Set Year"
+
 #endif // _CONFIGURATION_H
 
 // EOF
