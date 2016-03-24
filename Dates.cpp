@@ -6,7 +6,7 @@
 
 }*/
 
-void Dates::showTime(bool open, bool luxOpen, bool puntos)
+void Dates::showTime(bool open, bool luxOpen, bool puntos, LCDKeypad* lcd2)
 {
 	_open = open;
 	_luxOpen = luxOpen;
@@ -17,14 +17,14 @@ void Dates::showTime(bool open, bool luxOpen, bool puntos)
     const char* dayName[] = { "DOM", "LUN", "MAR", "MIE", "JUE", "VIE", "SAB" };
     const char* monthName[] = { "ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DEC" };
     
-    lcd.clear();
+    lcd2->clear();
     
 
-   lcd.print(String(dayName[_now.dayOfWeek()]) + " " +
+   lcd2->print(String(dayName[_now.dayOfWeek()]) + " " +
               (_now.day() < 10 ? "0" : "") + _now.day() + " " +
               monthName[_now.month()-1] + " " + _now.year());
-    lcd.setCursor(0,1);
-    lcd.print((_now.hour() < 10 ? "0" : "") + String(_now.hour()) +(puntos? ":":" ") +
+    lcd2->setCursor(0,1);
+    lcd2->print((_now.hour() < 10 ? "0" : "") + String(_now.hour()) +(puntos? ":":" ") +
               (_now.minute() < 10 ? "0" : "") + _now.minute() + 
               //":" +
               //(now.second() < 10 ? "0" : "") + now.second() +
@@ -312,7 +312,7 @@ int Dates::setTimeMinutes(uint8_t* tmpMinutes)
     else return(TIME_OUT);
 }
 
-int Dates::showOpenTime(uint8_t* openHours, uint8_t* openMinutes)
+int Dates::showTime(uint8_t* Hours, uint8_t* Minutes, LCDKeypad* lcd2, char* texto)
 {
     
     unsigned long timeRef;
@@ -320,19 +320,19 @@ int Dates::showOpenTime(uint8_t* openHours, uint8_t* openMinutes)
     uint8_t pushed = 0;
     timeRef = millis();
 
-    lcd.clear();
-    lcd.print("open Time");
-    lcd.setCursor(0,1);
-    lcd.print(String("HOUR: ") + ( *openHours < 9 ? "0" : "" ) + *openHours + 
-                   " MIN: " + ( *openMinutes < 9 ? "0" : "" ) + *openMinutes);
+    lcd2->clear();
+    lcd2->print(texto);
+    lcd2->setCursor(0,1);
+    lcd2->print(String("HOUR: ") + ( *Hours < 9 ? "0" : "" ) + *Hours + 
+                   " MIN: " + ( *Minutes < 9 ? "0" : "" ) + *Minutes);
 
      while ( (unsigned long)(millis() - timeRef) < 5000 )
     {
-        uint8_t button = lcd.button();
+        uint8_t button = lcd2->button();
 
         if ( button == KEYPAD_RIGHT ) // Increase 1 hour
         {
-           while ( lcd.button() != KEYPAD_NONE ) 
+           while ( lcd2->button() != KEYPAD_NONE ) 
             timeOut = false;
             pushed = KEYPAD_RIGHT;
             break;
@@ -341,7 +341,7 @@ int Dates::showOpenTime(uint8_t* openHours, uint8_t* openMinutes)
         else if ( button == KEYPAD_SELECT ) //Save hour
         {
            
-            while ( lcd.button() != KEYPAD_NONE ) 
+            while ( lcd2->button() != KEYPAD_NONE ) 
             timeOut = false;
             pushed = KEYPAD_SELECT;
             break;
@@ -359,51 +359,7 @@ int Dates::showOpenTime(uint8_t* openHours, uint8_t* openMinutes)
    
 }
 
-int Dates::showCloseTime(uint8_t* closeHours, uint8_t* closeMinutes)
-{
 
-   
-    unsigned long timeRef;
-    boolean timeOut = true;
-    uint8_t pushed = 0;
-    timeRef = millis();
-
-    lcd.clear();
-    lcd.print("Close Time");
-    lcd.setCursor(0,1);
-    lcd.print(String("HOUR: ") + ( *closeHours < 9 ? "0" : "" ) + *closeHours + 
-                   " MIN: " + ( *closeMinutes < 9 ? "0" : "" ) + *closeMinutes);
-      while ( (unsigned long)(millis() - timeRef) < 5000 )
-    {
-        uint8_t button = lcd.button();
-
-        if ( button == KEYPAD_RIGHT ) // Increase 1 hour
-        {
-           while ( lcd.button() != KEYPAD_NONE ) 
-            timeOut = false;
-            pushed = KEYPAD_RIGHT;
-            break;
-        }
-       
-        else if ( button == KEYPAD_SELECT ) //Save hour
-        {
-           
-            while ( lcd.button() != KEYPAD_NONE ) 
-            timeOut = false;
-            pushed = KEYPAD_SELECT;
-            break;
-           
-        }
-        delay(100);
-    }
-
-    if ( !timeOut ){
-         return(pushed);
-
-        }
-    else return(TIME_OUT);
-
-}
 
 int Dates::setLuxOpen(uint8_t* levelLuxOpen)
 {

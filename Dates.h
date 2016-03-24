@@ -26,14 +26,13 @@ private:
 	unsigned long _timeRef;
 public:
 	//Dates();
-	void showTime(bool, bool, bool);
+	void showTime(bool, bool, bool,LCDKeypad*);
 	int setTimeYear(int*);
 	int setTimeMont(uint8_t*);
 	int setTimeDay(uint8_t*);
 	int setTimeHours(uint8_t*);
 	int setTimeMinutes(uint8_t*);
-	int showOpenTime(uint8_t*, uint8_t*);
-	int showCloseTime(uint8_t*, uint8_t*);
+	int showTime(uint8_t*, uint8_t*, LCDKeypad*, char*);
 	int setLuxOpen(uint8_t*);
 	
 };

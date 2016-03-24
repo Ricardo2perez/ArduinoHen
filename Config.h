@@ -33,7 +33,8 @@
 #define BAJAP2 40
 #define P2ARRIBA 42
 #define P2ABAJO 44
-
+#define TEXTO_OPEN "Open Time"
+#define TEXTO_CLOSE "Close Time"
 #endif // _CONFIGURATION_H
 
 // EOF

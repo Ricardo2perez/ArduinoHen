@@ -27,6 +27,8 @@ RTC_DS1307 RTC;
 Dates fecha;
 states state;  // Holds the current state of the system
 
+char* Message = TEXTO_OPEN;
+
 int8_t button;  // Holds the current button pressed
 uint8_t openHours = 0, openMinutes = 0;  // Holds the current open time
 uint8_t closeHours = 0, closeMinutes = 0;
@@ -274,7 +276,7 @@ void transition(uint8_t trigger)
 void showTime()
 {
     puntos = !puntos;
-    fecha.showTime(open, luxOpen, puntos);
+    fecha.showTime(open, luxOpen, puntos, &lcd);
     
     
     
@@ -340,14 +342,16 @@ void setTimeMinutes()
 
 void showOpenTime()
 {
-    int receive = fecha.showOpenTime(&openHours, &openMinutes);
+    Message = TEXTO_OPEN;
+    int receive = fecha.showTime(&openHours, &openMinutes, &lcd, Message);
     transition(receive);
 
 }
 
 void showCloseTime()
 {
-   int receive = fecha.showCloseTime(&closeHours, &closeMinutes);
+   Message = TEXTO_CLOSE;
+   int receive = fecha.showTime(&closeHours, &closeMinutes, &lcd, Message);
    transition(receive);
    
 }
