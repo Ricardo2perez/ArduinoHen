@@ -33,12 +33,30 @@
 #define BAJAP2 40
 #define P2ARRIBA 42
 #define P2ABAJO 44
-#define ANNO_MINIMO 2014
-#define ANNO_MAXIMO 2022
+#define YEAR_MIN 2014
+#define YEAR_MAX 2022
+#define MONTH_MIN 1
+#define MONTH_MAX 12
+#define DAY_MIN 1
+#define DAY_MAX 31
+#define HOUR_MIN 0
+#define HOUR_MAX 23
+#define MINUTE_MIN 0
+#define MINUTE_MAX 23
+#define LUX_MIN 0
+#define LUX_MAX 500
+
 #define TEXTO_OPEN "Open Time"
 #define TEXTO_CLOSE "Close Time"
-#define TEXTO_TIME_YEAR "Time Year"
-#define TEXTO_SET_YEAR "Set Year"
+#define TEXT_TIME "Time "
+#define TEXT_SET_YEAR "Set Year"
+#define TEXT_SET_MONTH "Set Month"
+#define TEXT_SET_DAY "Set Day"
+#define TEXT_SET_HOUR "Set Hour"
+#define TEXT_SET_MINUTE "Set Minute"
+#define TEXT_SET_LUX "Set Lux"
+#define TEXT_LUX_OPEN "Lux Open"
+#define TEXT_LUX_CLOSE "Lux Close"
 
 #endif // _CONFIGURATION_H
 

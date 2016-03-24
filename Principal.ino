@@ -33,8 +33,8 @@ int8_t button;  // Holds the current button pressed
 uint8_t openHours = 0, openMinutes = 0;  // Holds the current open time
 uint8_t closeHours = 0, closeMinutes = 0;
 uint8_t timeHours = 0, timeMinutes = 0;
-uint8_t tmpHours = 0, tmpMonth = 0, tmpDay = 0, tmpMinutes = 0;
-uint8_t levelLuxOpen = 0, levelLuxClose = 0;
+int tmpHours = 0, tmpMonth = 0, tmpDay = 0, tmpMinutes = 0;
+int levelLuxOpen = 0, levelLuxClose = 0;
 int  tmpYear = 2016;
 boolean open = false;  // Holds the current state of the open  gate
 boolean close = false; // Holds the current state of the close gate
@@ -302,29 +302,46 @@ void showTime()
 
  void setTimeYear()
  {
-    transition(fecha.setTimeYear(&tmpYear, &lcd, TEXTO_TIME_YEAR, TEXTO_SET_YEAR,ANNO_MINIMO,ANNO_MAXIMO));
+
+    
+    DateTime _now = RTC.now();
+    tmpYear = _now.year();
+
+    transition(fecha.setTime(&tmpYear, &lcd, TEXT_TIME, TEXT_SET_YEAR, int(YEAR_MIN) , int(YEAR_MAX)));
  }
 
 void setTimeMont()
-{
-   transition(fecha.setTimeMont(&tmpMonth));
+{    
+    DateTime _now = RTC.now();
+    tmpMonth = _now.month();
+
+    transition(fecha.setTime(&tmpMonth, &lcd, TEXT_TIME, TEXT_SET_MONTH, int(MONTH_MIN), int(MONTH_MAX)));
 }
 
 void setTimeDay()
 {
-    transition(fecha.setTimeDay(&tmpDay));
+    DateTime _now = RTC.now();
+    tmpDay = _now.day();
+
+    transition(fecha.setTime(&tmpDay, &lcd, TEXT_TIME, TEXT_SET_DAY, int(DAY_MIN), int(DAY_MAX)));
 
 }
 
 void setTimeHours()
 {
-   transition(fecha.setTimeHours(&tmpHours));
+    DateTime _now = RTC.now();
+    tmpHours = _now.hour();
+
+    transition(fecha.setTime(&tmpHours, &lcd, TEXT_TIME, TEXT_SET_HOUR, int(HOUR_MIN), int(HOUR_MAX)));
 }
 
 
 void setTimeMinutes()
 {  
-    int receive = fecha.setTimeMinutes(&tmpMinutes);
+    DateTime _now = RTC.now();
+    tmpMinutes = _now.minute();
+
+    int receive = fecha.setTime(&tmpMinutes, &lcd, TEXT_TIME, TEXT_SET_MINUTE, int(MINUTE_MIN), int(MINUTE_MAX));
 
     if ( receive == KEYPAD_SELECT )
     {
@@ -343,7 +360,7 @@ void setTimeMinutes()
 void showOpenTime()
 {
     Message = TEXTO_OPEN;
-    int receive = fecha.showTime(&openHours, &openMinutes, &lcd, Message);
+    int receive = fecha.showTime(&openHours, &openMinutes, &lcd, TEXTO_OPEN);
     transition(receive);
 
 }
@@ -371,7 +388,7 @@ void checkCloseLux()
 }
 void SetLuxOpen()
 {
-   int receive = fecha.setLuxOpen(&levelLuxOpen);
+   int receive = fecha.setLux(&levelLuxOpen, &lcd, TEXT_SET_LUX, TEXT_LUX_OPEN, int(LUX_MIN), int(LUX_MAX));
    if ( receive == KEYPAD_SELECT){
      EEPROM.write( ADDRESS+POSLUXOPEN , levelLuxOpen );
    }

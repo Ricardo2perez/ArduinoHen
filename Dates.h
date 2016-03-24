@@ -27,13 +27,12 @@ private:
 public:
 	//Dates();
 	void showTime(bool, bool, bool,LCDKeypad*);
-	int setTimeYear(int*, LCDKeypad*, char*, char*, uint8_t, uint8_t);
-	int setTimeMont(uint8_t*);
-	int setTimeDay(uint8_t*);
-	int setTimeHours(uint8_t*);
-	int setTimeMinutes(uint8_t*);
+	int setTime(int*, LCDKeypad*, char*, char*, int, int);
+	int setTimeDay(int*);
+	int setTimeHours(int*);
+	int setTimeMinutes(int*);
 	int showTime(uint8_t*, uint8_t*, LCDKeypad*, char*);
-	int setLuxOpen(uint8_t*);
+	int setLux(int*,LCDKeypad*, char*, char*, int, int);
 	
 };
 
